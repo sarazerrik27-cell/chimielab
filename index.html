@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChemLab - Calculateur Chimique</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #071526, #103b5c);
+    color: white;
+    min-height: 100vh;
+    padding: 25px 15px;
+}
+
+.container {
+    max-width: 950px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+header h1 {
+    font-size: 36px;
+    color: #48d9ff;
+    margin-bottom: 12px;
+}
+
+header p {
+    color: #b6d3e5;
+}
+
+.card {
+    background: #102c46;
+    border: 1px solid #28516e;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px #0004;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 9px;
+    border: 2px solid #32769b;
+    background: #071b30;
+    color: white;
+    font-size: 18px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #48d9ff;
+}
+
+button {
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #00bce4;
+    color: #071b30;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+button:hover {
+    background: #65e4ff;
+}
+
+.examples {
+    margin-top: 15px;
+    color: #b6d3e5;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.examples span {
+    color: #48d9ff;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.result {
+    display: none;
+}
+
+.result h2 {
+    color: #48d9ff;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.result-box {
+    background: #17445b;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.result-box p {
+    color: #b6d3e5;
+    font-size: 14px;
+}
+
+.result-box strong {
+    display: block;
+    color: #6fffd2;
+    font-size: 25px;
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+}
+
+.section-title {
+    color: #48d9ff;
+    margin: 25px 0 10px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 13px 8px;
+    border-bottom: 1px solid #31536d;
+    text-align: center;
+}
+
+th {
+    color: #48d9ff;
+}
+
+.error {
+    color: #ff8585;
+    margin-top: 12px;
+}
+
+.info {
+    color: #b6d3e5;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #8eafc4;
+}
+
+@media(max-width:500px) {
+    header h1 { font-size: 27px; }
+    .card { padding: 18px; }
+    th, td { font-size: 12px; padding: 9px 4px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>⚗️ ChemLab</h1>
+    <p>Calculateur et Analyse des Molécules Chimiques</p>
+</header>
+
+<div class="card">
+
+    <label for="formula">
+        Entrez la formule chimique :
+    </label>
+
+    <input
+        type="text"
+        id="formula"
+        placeholder="Exemple : H2O, CO2, H2SO4..."
+    >
+
+    <button onclick="calculate()">
+        ⚗️ Analyser la molécule
+    </button>
+
+    <div class="examples">
+        Exemples :
+        <span onclick="setFormula('H2O')">H2O</span>
+        <span onclick="setFormula('CO2')">CO2</span>
+        <span onclick="setFormula('H2SO4')">H2SO4</span>
+        <span onclick="setFormula('Ca(OH)2')">Ca(OH)2</span>
+        <span onclick="setFormula('C6H12O6')">C6H12O6</span>
+    </div>
+
+    <p id="error" class="error"></p>
+</div>
+
+<div class="card result" id="result">
+
+    <h2>📊 Résultats de l'analyse</h2>
+
+    <div class="grid">
+
+        <div class="result-box">
+            <p>Formule chimique</p>
+            <strong id="formulaResult">--</strong>
+        </div>
+
+        <div class="result-box">
+            <p>Masse molaire</p>
+            <strong id="molarMass">--</strong>
+        </div>
+
+        <div class="result-box">
+            <p>Nombre total d'atomes</p>
+            <strong id="atomCount">--</strong>
+        </div>
+
+        <div class="result-box">
+            <p>Température d'ébullition</p>
+            <strong id="boilingTemp">--</strong>
+            <p id="boilingNote"></p>
+        </div>
+
+    </div>
+
+    <h3 class="section-title">Composition chimique</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Élément</th>
+                    <th>Nombre</th>
+                    <th>Masse (g/mol)</th>
+                    <th>Pourcentage (%)</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <p class="info">
+        Les températures sont données à la pression atmosphérique
+        standard (1 atm), lorsqu'elles sont disponibles.
+    </p>
+
+</div>
+
+<footer>
+    <p>⚗️ ChemLab © 2026</p>
+    <p>Application éducative de chimie</p>
+</footer>
+
+</div>
+
+<script>
+
+// MASSES ATOMIQUES (g/mol)
+
+const atomicMass = {
+H:1.008, He:4.0026, Li:6.94, Be:9.0122,
+B:10.81, C:12.011, N:14.007, O:15.999,
+F:18.998, Ne:20.180, Na:22.990, Mg:24.305,
+Al:26.982, Si:28.085, P:30.974, S:32.06,
+Cl:35.45, Ar:39.948, K:39.098, Ca:40.078,
+Sc:44.956, Ti:47.867, V:50.942, Cr:51.996,
+Mn:54.938, Fe:55.845, Co:58.933, Ni:58.693,
+Cu:63.546, Zn:65.38, Ga:69.723, Ge:72.630,
+As:74.922, Se:78.971, Br:79.904, Kr:83.798,
+Rb:85.468, Sr:87.62, Ag:107.868, Cd:112.414,
+Sn:118.710, I:126.904, Xe:131.293, Cs:132.905,
+Ba:137.327, Pt:195.084, Au:196.967, Hg:200.592,
+Pb:207.2
+};
+
+// TEMPERATURES EN °C À 1 ATM
+
+const thermalData = {
+H2O: {value:100, label:"Ébullition"},
+NH3: {value:-33.34, label:"Ébullition"},
+CH4: {value:-161.5, label:"Ébullition"},
+C2H5OH: {value:78.37, label:"Ébullition"},
+C6H6: {value:80.1, label:"Ébullition"},
+C3H8O: {value:82.6, label:"Ébullition"},
+C6H5OH: {value:181.7, label:"Ébullition"},
+HCl: {value:-85.05, label:"Ébullition"},
+N2: {value:-195.8, label:"Ébullition"},
+O2: {value:-183.0, label:"Ébullition"},
+F2: {value:-188.1, label:"Ébullition"},
+Cl2: {value:-34.04, label:"Ébullition"},
+Br2: {value:58.8, label:"Ébullition"},
+I2: {value:184.3, label:"Ébullition"},
+Hg: {value:356.7, label:"Ébullition"},
+Fe: {value:2862, label:"Ébullition"},
+Cu: {value:2562, label:"Ébullition"},
+NaCl: {value:1465, label:"Ébullition"},
+CO2: {value:-78.5, label:"Sublimation"}
+};
+
+// ANALYSE DE LA FORMULE
+
+function parseFormula(formula) {
+
+    let index = 0;
+
+    function readNumber() {
+        let match = formula.slice(index).match(/^\d+/);
+
+        if (match) {
+            index += match[0].length;
+            let n = Number(match[0]);
+
+            if (n <= 0) throw Error("Indice invalide !");
+
+            return n;
+        }
+
+        return 1;
+    }
+
+    function parseGroup() {
+
+        let counts = {};
+
+        while (index < formula.length) {
+
+            if (formula[index] === ')') {
+                index++;
+                return counts;
+            }
+
+            if (formula[index] === '(') {
+
+                index++;
+
+                let group = parseGroup();
+                let multiplier = readNumber();
+
+                for (let element in group) {
+                    counts[element] =
+                        (counts[element] || 0) +
+                        group[element] * multiplier;
+                }
+
+            } else {
+
+                let match = formula.slice(index)
+                    .match(/^([A-Z][a-z]?)/);
+
+                if (!match) {
+                    throw Error("Formule chimique invalide !");
+                }
+
+                let element = match[1];
+                index += element.length;
+
+                if (!(element in atomicMass)) {
+                    throw Error("Élément inconnu : " + element);
+                }
+
+                let number = readNumber();
+
+                counts[element] =
+                    (counts[element] || 0) + number;
+            }
+        }
+
+        return counts;
+    }
+
+    if (!formula || !/^[A-Z]/.test(formula)) {
+        throw Error("Entrez une formule valide !");
+    }
+
+    let result = parseGroup();
+
+    if (index !== formula.length) {
+        throw Error("Vérifiez la formule et les parenthèses !");
+    }
+
+    return result;
+}
+
+// CALCUL PRINCIPAL
+
+function calculate() {
+
+    const formula = document
+        .getElementById("formula")
+        .value.trim();
+
+    const error = document.getElementById("error");
+    const result = document.getElementById("result");
+
+    error.textContent = "";
+    result.style.display = "none";
+
+    try {
+
+        const elements = parseFormula(formula);
+
+        let totalMass = 0;
+        let totalAtoms = 0;
+
+        for (let element in elements) {
+
+            totalMass +=
+                atomicMass[element] * elements[element];
+
+            totalAtoms += elements[element];
+        }
+
+        document.getElementById("formulaResult")
+            .textContent = formula;
+
+        document.getElementById("molarMass")
+            .textContent = totalMass.toFixed(3) + " g/mol";
+
+        document.getElementById("atomCount")
+            .textContent = totalAtoms;
+
+        // TEMPÉRATURE D'ÉBULLITION
+
+        const thermal = thermalData[formula];
+
+        document.getElementById("boilingTemp")
+            .textContent = thermal
+            ? thermal.value + " °C"
+            : "Non disponible";
+
+        document.getElementById("boilingNote")
+            .textContent = thermal
+            ? thermal.label
+            : "Donnée non enregistrée";
+
+        // TABLEAU DES ELEMENTS
+
+        let html = "";
+
+        for (let element in elements) {
+
+            let count = elements[element];
+
+            let mass = atomicMass[element] * count;
+
+            let percentage = (mass / totalMass) * 100;
+
+            html += `
+                <tr>
+                    <td><strong>${element}</strong></td>
+                    <td>${count}</td>
+                    <td>${mass.toFixed(3)}</td>
+                    <td>${percentage.toFixed(2)}%</td>
+                </tr>
+            `;
+        }
+
+        document.getElementById("tableBody")
+            .innerHTML = html;
+
+        result.style.display = "block";
+
+    } catch (e) {
+
+        error.textContent = e.message;
+
+    }
+}
+
+function setFormula(value) {
+    document.getElementById("formula").value = value;
+    calculate();
+}
+
+document.getElementById("formula")
+    .addEventListener("keydown", function(e) {
+        if (e.key === "Enter") calculate();
+    });
+
+</script>
+
+</body>
+</html>
