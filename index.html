@@ -4,838 +4,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChemLab Sakura 🌸</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
+<title>ChemLab Sakura</title>
 <style>
-:root{
-  --pink:#ee91b7;
-  --deep:#b95d88;
-  --soft:#fff0f6;
-  --pale:#fff8fb;
-  --text:#694457;
-  --border:#f5d2e1;
-  --white:#fff;
-  --shadow:0 8px 28px rgba(185,93,136,.12);
+:root {
+ --pink:#e98bb5; --dark:#b84f7e; --light:#fff1f7;
+ --text:#684459; --border:#f3d3e1; --white:#fff;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:'Quicksand',sans-serif;
-  color:var(--text);
-  background:linear-gradient(135deg,#fff8fb,#ffeaf3);
-  min-height:100vh;
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-/* SAKURA BACKGROUND */
-.sakura{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
+ margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);
+ background:linear-gradient(135deg,#fff8fb,#ffeef5);
+ min-height:100vh;overflow-x:hidden
 }
 .petal{
-  position:absolute;
-  top:-35px;
-  width:13px;
-  height:18px;
-  border-radius:80% 10% 80% 10%;
-  background:linear-gradient(135deg,#ffd5e6,#ed91b8);
-  opacity:.65;
-  animation:fall linear infinite;
+ position:fixed;top:-30px;color:#f3a8c6;opacity:.6;
+ animation:fall linear infinite;pointer-events:none;z-index:0
 }
-@keyframes fall{
-  0%{transform:translateY(-30px) rotate(0deg);opacity:0}
-  10%{opacity:.7}
-  90%{opacity:.6}
-  100%{transform:translateY(110vh) translateX(100px) rotate(600deg);opacity:0}
-}
-#authPage,.app,.auth-card{position:relative;z-index:1}
-
-/* LOGIN */
-#authPage{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-.auth-card{
-  width:100%;
-  max-width:420px;
-  background:rgba(255,255,255,.94);
-  padding:38px;
-  border-radius:28px;
-  text-align:center;
-  box-shadow:var(--shadow);
-  border:1px solid white;
-}
-.logo{
-  font-family:'Playfair Display',serif;
-  color:var(--deep);
-  font-size:36px;
-  font-weight:700;
-}
-.logo span{color:var(--pink)}
-.flower{font-size:32px}
-.auth-card h2{margin:15px 0 5px}
-.auth-card p{font-size:13px;color:#a78395}
-.field{
-  display:block;
-  width:100%;
-  padding:14px 15px;
-  margin:12px 0;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:#fffafd;
-  color:var(--text);
-  outline:none;
-}
-.field:focus{border-color:var(--pink);box-shadow:0 0 0 3px #ffe2ee}
-.primary{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:13px;
-  background:linear-gradient(120deg,#ee91b7,#d978a4);
-  color:white;
-  font-weight:700;
-  transition:.2s;
-}
-.primary:hover{transform:translateY(-2px);filter:brightness(.98)}
-.switch{
-  border:0;
-  background:none;
-  color:var(--deep);
-  font-weight:700;
-  margin-top:16px;
-}
-.message{font-size:13px;color:var(--deep);margin-top:12px}
-
-/* HEADER */
-.app{min-height:100vh}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 header{
-  background:rgba(255,255,255,.93);
-  backdrop-filter:blur(10px);
-  padding:14px 6%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:5;
-  box-shadow:0 3px 18px rgba(185,93,136,.08);
+ padding:20px 5%;display:flex;justify-content:space-between;
+ align-items:center;gap:12px;flex-wrap:wrap;position:relative;z-index:2
 }
-header .logo{font-size:27px}
-.header-right{display:flex;align-items:center;gap:12px}
-.logout{
-  border:0;
-  background:#ffe6f0;
-  color:var(--deep);
-  padding:10px 16px;
-  border-radius:12px;
-  font-weight:700;
+.logo{font-size:27px;color:var(--dark);font-weight:900}
+.logo span{color:var(--pink)}
+.user{background:white;padding:10px 17px;border-radius:25px;border:1px solid var(--border)}
+main{width:min(1150px,94%);margin:20px auto;position:relative;z-index:1}
+.hero{text-align:center;margin:30px 0}
+.hero h1{font-size:clamp(28px,5vw,43px);color:var(--dark);margin:0}
+.hero p{color:#a17b90}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+.card{
+ background:#ffffffeb;border:1px solid var(--border);border-radius:22px;
+ padding:21px;box-shadow:0 10px 30px #d58ba51b
 }
-.container{max-width:1150px;margin:auto;padding:28px 20px}
-.hero{
-  min-height:190px;
-  padding:35px;
-  border-radius:25px;
-  color:white;
-  background:linear-gradient(120deg,#e98ab2,#f4b7ce);
-  position:relative;
-  overflow:hidden;
-  box-shadow:var(--shadow);
+h2,h3{color:var(--dark)}
+label{display:block;font-size:13px;font-weight:700;margin:14px 0 7px}
+input,select{
+ width:100%;padding:12px;border:1px solid var(--border);
+ border-radius:12px;background:#fffafd;color:var(--text);font:inherit;outline:none
 }
-.hero:after{
-  content:"🌸";
-  position:absolute;
-  right:35px;
-  top:25px;
-  font-size:90px;
-  opacity:.4;
+input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px #f9dce9}
+button{
+ cursor:pointer;border:0;border-radius:12px;padding:11px 15px;
+ background:var(--pink);color:white;font-weight:700
 }
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:32px;
-  margin:0 0 10px;
+button:hover{filter:brightness(.97)}
+.secondary{background:white;color:var(--dark);border:1px solid var(--border)}
+.full{width:100%;margin-top:12px}
+.search{margin-bottom:12px}
+.molecule-list{display:grid;gap:8px;max-height:430px;overflow:auto}
+.mol{
+ display:flex;justify-content:space-between;align-items:center;gap:8px;
+ padding:11px;border:1px solid var(--border);border-radius:12px;
+ background:#fffafd;color:var(--text);text-align:left
 }
-.hero p{max-width:600px;line-height:1.7}
-.tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:25px 0;
+.mol.active{background:#fce4ef;border-color:var(--pink)}
+.mol small{color:#a17b90}
+.formula{font-size:22px;font-weight:800;color:var(--dark)}
+.selected{
+ background:linear-gradient(120deg,#fff0f6,#fffafd);
+ border:1px solid var(--border);border-radius:17px;padding:16px;margin-bottom:17px
 }
-.tab{
-  border:1px solid var(--border);
-  background:white;
-  color:var(--deep);
-  padding:12px 17px;
-  border-radius:13px;
-  font-weight:700;
-  box-shadow:var(--shadow);
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{background:white;color:var(--dark);border:1px solid var(--border)}
+.tab.active{background:var(--dark);color:white}
+.tool{display:none}.tool.active{display:block}
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.result{padding:17px;background:#fff7fa;border:1px solid var(--border);border-radius:15px}
+.result small{color:#a17b90}
+.result strong{display:block;color:var(--dark);font-size:22px;margin-top:8px;overflow-wrap:anywhere}
+.note{padding:13px;background:#fff2f7;border-radius:12px;margin-top:15px;font-size:13px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin-top:15px;font-size:13px}
+td,th{padding:10px;border-bottom:1px solid var(--border);text-align:left}
+th{color:var(--dark);background:#fff5f9}
+.viewer{height:290px;border:1px solid var(--border);border-radius:16px;background:#fff8fb}
+.viewer svg{width:100%;height:100%}
+.auth{
+ position:fixed;inset:0;background:#fff2f7;z-index:10;
+ display:grid;place-items:center;padding:20px
 }
-.tab.active{background:var(--pink);color:white;border-color:var(--pink)}
-.panel{
-  background:rgba(255,255,255,.95);
-  border:1px solid white;
-  border-radius:22px;
-  padding:26px;
-  box-shadow:var(--shadow);
-  margin-bottom:22px;
-}
-.panel h2{
-  font-family:'Playfair Display',serif;
-  color:var(--deep);
-  margin-top:0;
-}
-.panel p{line-height:1.7}
-label{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}
-.result{
-  background:#fff1f7;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:17px;
-  margin-top:18px;
-  line-height:2;
-  overflow-wrap:anywhere;
-}
-.small{font-size:12px;color:#a78395}
-table{width:100%;border-collapse:collapse;margin-top:12px}
-th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left}
-th{color:var(--deep)}
-footer{text-align:center;padding:28px;color:#a78395;font-size:13px}
-
-/* MOLECULE VIEWER */
-.viewer-wrap{
-  background:linear-gradient(145deg,#fff4f9,#ffe7f1);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:12px;
-}
-#viewer{
-  width:100%;
-  height:390px;
-  display:block;
-  touch-action:none;
-  cursor:grab;
-}
-#viewer:active{cursor:grabbing}
-.viewer-help{text-align:center;font-size:12px;color:#a78395}
-.atom-legend{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-  margin:15px 0;
-  font-size:12px;
-}
-.dot{
-  display:inline-block;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  margin-right:5px;
-}
-.viewer-buttons{display:flex;gap:8px;flex-wrap:wrap}
-.viewer-buttons button{
-  border:1px solid var(--border);
-  background:white;
-  color:var(--deep);
-  border-radius:10px;
-  padding:9px 14px;
-}
-@media(max-width:600px){
-  header{padding:12px}
-  header .logo{font-size:22px}
-  .hero{padding:25px}
-  .hero h1{font-size:25px}
-  .hero:after{font-size:55px;right:15px}
-  .panel{padding:18px}
-  #viewer{height:310px}
-}
+.auth-box{width:min(400px,100%);background:white;border:1px solid var(--border);
+ border-radius:22px;padding:28px;box-shadow:0 15px 40px #b84f7e22}
+.auth-box h2{text-align:center}
+.auth-switch{text-align:center;font-size:13px;margin-top:15px}
+.auth-switch a{color:var(--dark);cursor:pointer;font-weight:700}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:#b58ba0;font-size:12px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.molecule-list{max-height:250px}}
+@media(max-width:480px){.result-grid{grid-template-columns:1fr}.card{padding:15px}}
 </style>
 </head>
-
 <body>
 
-<div class="sakura" id="sakura"></div>
+<div id="petals"></div>
 
-<!-- LOGIN -->
-<section id="authPage">
-  <div class="auth-card">
-    <div class="flower">🌸</div>
-    <div class="logo">Chem<span>Lab</span></div>
-    <p>Japanese Sakura Edition · Your little chemistry world</p>
-
-    <h2 id="authTitle">Welcome back!</h2>
-    <p id="authDescription">Connecte-toi pour entrer dans ton laboratoire.</p>
-
-    <input class="field" id="username" placeholder="Username" autocomplete="username">
-    <input class="field" id="password" type="password" placeholder="Password" autocomplete="current-password">
-
-    <button class="primary" id="authButton" onclick="authenticate()">Login 🌸</button>
-    <button class="switch" id="switchButton" onclick="toggleAuth()">Create an account</button>
-    <div class="message" id="authMessage"></div>
+<div class="auth" id="auth">
+ <div class="auth-box">
+  <h2>🌸 ChemLab Sakura</h2>
+  <p style="text-align:center;color:#a17b90">Welcome to your chemistry laboratory</p>
+  <div id="loginForm">
+   <label>Username</label>
+   <input id="loginUser" placeholder="Your username">
+   <label>Password</label>
+   <input id="loginPass" type="password" placeholder="Your password">
+   <button class="full" onclick="login()">Login</button>
+   <div class="auth-switch">No account? <a onclick="showRegister()">Create Account</a></div>
   </div>
-</section>
-
-<!-- APPLICATION -->
-<div id="appContent" class="app hidden">
-
-<header>
-  <div class="logo">Chem<span>Lab</span> 🌸</div>
-  <div class="header-right">
-    <span id="welcomeUser"></span>
-    <button class="logout" onclick="logout()">Logout</button>
+  <div id="registerForm" class="hidden">
+   <label>Username</label>
+   <input id="regUser" placeholder="Choose username">
+   <label>Password</label>
+   <input id="regPass" type="password" placeholder="Choose password">
+   <button class="full" onclick="register()">Create Account</button>
+   <div class="auth-switch">Already registered? <a onclick="showLogin()">Login</a></div>
   </div>
-</header>
-
-<main class="container">
-
-  <section class="hero">
-    <h1>Welcome to ChemLab 🌸</h1>
-    <p>Discover chemistry in a beautiful little Japanese-inspired laboratory. Learn, calculate and explore molecules!</p>
-  </section>
-
-  <nav class="tabs">
-    <button class="tab active" onclick="showTab('molar',this)">⚗️ Masse molaire</button>
-    <button class="tab" onclick="showTab('atoms',this)">🔬 Atomes</button>
-    <button class="tab" onclick="showTab('composition',this)">🌷 Composition</button>
-    <button class="tab" onclick="showTab('boiling',this)">🌡️ Boiling point</button>
-    <button class="tab" onclick="showTab('molecules',this)">🧬 3D Molecules</button>
-  </nav>
-
-  <!-- MASSE MOLAIRE -->
-  <section class="panel tool" id="molar">
-    <h2>⚗️ Masse molaire</h2>
-    <p>Calcule la masse molaire d'une molécule à partir de sa formule chimique.</p>
-    <label>Formule chimique</label>
-    <input class="field" id="formula1" placeholder="Exemple : H2O">
-    <button class="primary" onclick="calculateMolar()">Calculate ✨</button>
-    <div class="result" id="molarResult">Le résultat apparaîtra ici.</div>
-  </section>
-
-  <!-- NOMBRE ATOMES -->
-  <section class="panel tool hidden" id="atoms">
-    <h2>🔬 Nombre d'atomes</h2>
-    <p>Découvre le nombre d'atomes de chaque élément dans une molécule.</p>
-    <label>Formule chimique</label>
-    <input class="field" id="formula2" placeholder="Exemple : Ca(OH)2">
-    <button class="primary" onclick="calculateAtoms()">Calculate ✨</button>
-    <div class="result" id="atomsResult">Le résultat apparaîtra ici.</div>
-  </section>
-
-  <!-- COMPOSITION -->
-  <section class="panel tool hidden" id="composition">
-    <h2>🌷 Composition chimique</h2>
-    <p>Calcule la composition centésimale massique de chaque élément.</p>
-    <label>Formule chimique</label>
-    <input class="field" id="formula3" placeholder="Exemple : H2SO4">
-    <button class="primary" onclick="calculateComposition()">Calculate ✨</button>
-    <div class="result" id="compositionResult">Le résultat apparaîtra ici.</div>
-  </section>
-
-  <!-- BOILING -->
-  <section class="panel tool hidden" id="boiling">
-    <h2>🌡️ Température d'ébullition</h2>
-    <label>Choisir une substance</label>
-    <select class="field" id="substance">
-      <option value="water">Water (H₂O)</option>
-      <option value="ethanol">Ethanol</option>
-      <option value="acetone">Acetone</option>
-      <option value="benzene">Benzene</option>
-      <option value="methanol">Methanol</option>
-      <option value="ammonia">Ammonia</option>
-      <option value="oxygen">Oxygen</option>
-      <option value="nitrogen">Nitrogen</option>
-    </select>
-    <button class="primary" onclick="calculateBoiling()">Search 🌸</button>
-    <div class="result" id="boilingResult">Choisis une substance.</div>
-    <p class="small">Valeurs approximatives à 1 atm.</p>
-  </section>
-
-  <!-- 3D MOLECULES -->
-  <section class="panel tool hidden" id="molecules">
-    <h2>🧬 Molecular 3D Studio</h2>
-    <p>Explore les molécules, fais-les tourner et observe leur géométrie.</p>
-
-    <label>Choose a molecule</label>
-    <select class="field" id="moleculeSelect" onchange="drawMolecule()">
-      <option value="H2O">Water — H₂O</option>
-      <option value="CO2">Carbon dioxide — CO₂</option>
-      <option value="CH4">Methane — CH₄</option>
-      <option value="NH3">Ammonia — NH₃</option>
-    </select>
-
-    <div class="viewer-wrap">
-      <svg id="viewer" viewBox="0 0 500 350" role="img" aria-label="Interactive molecular model">
-        <defs>
-          <radialGradient id="hydrogen">
-            <stop offset="0%" stop-color="#fff"/>
-            <stop offset="75%" stop-color="#fff"/>
-            <stop offset="100%" stop-color="#d9cbd2"/>
-          </radialGradient>
-          <radialGradient id="oxygen">
-            <stop offset="0%" stop-color="#ffb2b2"/>
-            <stop offset="70%" stop-color="#ee4c69"/>
-            <stop offset="100%" stop-color="#a92748"/>
-          </radialGradient>
-          <radialGradient id="carbon">
-            <stop offset="0%" stop-color="#aaa"/>
-            <stop offset="70%" stop-color="#50505a"/>
-            <stop offset="100%" stop-color="#22222a"/>
-          </radialGradient>
-          <radialGradient id="nitrogen">
-            <stop offset="0%" stop-color="#b9d5ff"/>
-            <stop offset="70%" stop-color="#477de0"/>
-            <stop offset="100%" stop-color="#234b9c"/>
-          </radialGradient>
-        </defs>
-        <g id="moleculeDrawing"></g>
-      </svg>
-      <div class="viewer-help">Drag to rotate · Scroll to zoom · Double-click to reset</div>
-    </div>
-
-    <div class="atom-legend">
-      <span><i class="dot" style="background:#ee4c69"></i>Oxygen</span>
-      <span><i class="dot" style="background:#555"></i>Carbon</span>
-      <span><i class="dot" style="background:#477de0"></i>Nitrogen</span>
-      <span><i class="dot" style="background:white;border:1px solid #ddd"></i>Hydrogen</span>
-    </div>
-
-    <div class="viewer-buttons">
-      <button onclick="zoomMolecule(1.15)">＋ Zoom</button>
-      <button onclick="zoomMolecule(0.87)">－ Zoom</button>
-      <button onclick="resetMolecule()">↻ Reset</button>
-    </div>
-    <div class="result" id="moleculeInfo"></div>
-  </section>
-
-</main>
-
-<footer>Made with love and cherry blossoms 🌸 · ChemLab Sakura Edition</footer>
+  <p id="authMessage" style="color:#b84f7e;text-align:center;font-size:13px"></p>
+ </div>
 </div>
 
+<header>
+ <div class="logo">🌸 ChemLab <span>Sakura</span></div>
+ <div class="user">Welcome, <b id="username">Student</b> 🌷
+ <button class="secondary" onclick="logout()">Logout</button></div>
+</header>
+
+<main>
+ <section class="hero">
+  <h1>Explore Chemistry</h1>
+  <p>Discover molecules and calculate their chemical properties.</p>
+ </section>
+
+ <div class="layout">
+  <aside class="card">
+   <h3>🌷 Molecule Library</h3>
+   <input class="search" id="search" placeholder="Search molecule or formula..." oninput="renderList()">
+   <div class="molecule-list" id="moleculeList"></div>
+   <div class="note">Choisis une molécule. Elle restera sélectionnée quand tu changeras d'outil.</div>
+  </aside>
+
+  <section class="card">
+   <div class="selected">
+    <div style="font-size:12px;color:#a17b90">SELECTED MOLECULE</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+     <div><h2 id="selectedName">Eau</h2><div class="formula" id="selectedFormula">H₂O</div></div>
+     <button class="secondary" onclick="document.getElementById('search').focus()">Change molecule</button>
+    </div>
+   </div>
+
+   <div class="tabs">
+    <button class="tab active" onclick="openTab('mass',this)">Masse molaire</button>
+    <button class="tab" onclick="openTab('atoms',this)">Nombre d'atomes</button>
+    <button class="tab" onclick="openTab('composition',this)">Composition</button>
+    <button class="tab" onclick="openTab('boiling',this)">Ébullition</button>
+    <button class="tab" onclick="openTab('structure',this)">Structure 2D</button>
+   </div>
+
+   <div class="tool active" id="mass">
+    <h3>⚖️ Masse molaire</h3>
+    <label>Quantité de matière (mol)</label>
+    <input type="number" id="massN" value="1" min="0" step="any" oninput="updateMass()">
+    <div class="result-grid">
+     <div class="result"><small>Masse molaire</small><strong id="molarMass">18.015 g/mol</strong></div>
+     <div class="result"><small>Masse m</small><strong id="sampleMass">18.015 g</strong></div>
+    </div>
+    <div class="note">Relation : m = n × M. La molécule reste automatiquement sélectionnée.</div>
+   </div>
+
+   <div class="tool" id="atoms">
+    <h3>⚛️ Nombre d'atomes</h3>
+    <label>Quantité de matière (mol)</label>
+    <input type="number" id="atomN" value="1" min="0" step="any" oninput="updateAtoms()">
+    <div class="result-grid">
+     <div class="result"><small>Atomes par molécule</small><strong id="atomsPer">3</strong></div>
+     <div class="result"><small>Nombre total d'atomes</small><strong id="totalAtoms">1.807 × 10²⁴</strong></div>
+    </div>
+    <table><thead><tr><th>Élément</th><th>Nombre d'atomes</th></tr></thead><tbody id="atomRows"></tbody></table>
+   </div>
+
+   <div class="tool" id="composition">
+    <h3>🧪 Composition chimique</h3>
+    <div class="result"><small>Masse molaire totale</small><strong id="compositionMass"></strong></div>
+    <table><thead><tr><th>Élément</th><th>Nombre</th><th>Masse (g/mol)</th><th>% massique</th></tr></thead><tbody id="compositionRows"></tbody></table>
+   </div>
+
+   <div class="tool" id="boiling">
+    <h3>🌡️ Température d'ébullition</h3>
+    <div class="result-grid">
+     <div class="result"><small>Température (°C)</small><strong id="boilingC"></strong></div>
+     <div class="result"><small>Température (K)</small><strong id="boilingK"></strong></div>
+    </div>
+    <div class="note" id="boilingNote">Valeur indicative à pression atmosphérique (1 atm).</div>
+   </div>
+
+   <div class="tool" id="structure">
+    <h3>🫧 Structure moléculaire simplifiée</h3>
+    <div class="viewer"><svg id="moleculeSvg" viewBox="0 0 500 280"></svg></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+     <button class="secondary" onclick="rotate(-0.3)">↶ Rotate</button>
+     <button class="secondary" onclick="rotate(0.3)">Rotate ↷</button>
+     <button class="secondary" onclick="rotation=0;drawStructure()">Reset</button>
+    </div>
+    <div class="note">Schéma pédagogique simplifié en 2D.</div>
+   </div>
+  </section>
+ </div>
+</main>
+<footer>Made with love 🌸 ChemLab Sakura</footer>
+
 <script>
-/* SAKURA PETALS */
-const sakura = document.getElementById("sakura");
-for(let i=0;i<24;i++){
-  const petal=document.createElement("div");
-  petal.className="petal";
-  petal.style.left=Math.random()*100+"%";
-  petal.style.animationDuration=(8+Math.random()*13)+"s";
-  petal.style.animationDelay=(-Math.random()*18)+"s";
-  petal.style.width=(9+Math.random()*9)+"px";
-  petal.style.height=(12+Math.random()*10)+"px";
-  sakura.appendChild(petal);
-}
-
-/* LOGIN - LOCAL DEMO */
-let createMode=false;
-
-function toggleAuth(){
-  createMode=!createMode;
-  document.getElementById("authTitle").textContent=
-    createMode?"Create your account":"Welcome back!";
-  document.getElementById("authDescription").textContent=
-    createMode?"Create your ChemLab account.":"Connecte-toi pour entrer dans ton laboratoire.";
-  document.getElementById("authButton").textContent=
-    createMode?"Create account 🌸":"Login 🌸";
-  document.getElementById("switchButton").textContent=
-    createMode?"I already have an account":"Create an account";
-  document.getElementById("authMessage").textContent="";
-}
-
-function authenticate(){
-  const user=document.getElementById("username").value.trim();
-  const pass=document.getElementById("password").value;
-  const msg=document.getElementById("authMessage");
-
-  if(user.length<3 || pass.length<6){
-    msg.textContent="Username: 3 caractères minimum. Password: 6 minimum.";
-    return;
-  }
-
-  let accounts=JSON.parse(localStorage.getItem("sakuraAccounts")||"{}");
-
-  if(createMode){
-    if(accounts[user]){
-      msg.textContent="Ce username existe déjà.";
-      return;
-    }
-    accounts[user]=pass;
-    localStorage.setItem("sakuraAccounts",JSON.stringify(accounts));
-    msg.textContent="Account created! You can now login.";
-    toggleAuth();
-    return;
-  }
-
-  if(accounts[user]===pass){
-    localStorage.setItem("sakuraCurrentUser",user);
-    enterApp(user);
-  }else{
-    msg.textContent="Username ou password incorrect.";
-  }
-}
-
-function enterApp(user){
-  document.getElementById("authPage").classList.add("hidden");
-  document.getElementById("appContent").classList.remove("hidden");
-  document.getElementById("welcomeUser").textContent="Hi, "+user+" 🌸";
-}
-
-function logout(){
-  localStorage.removeItem("sakuraCurrentUser");
-  location.reload();
-}
-
-const savedUser=localStorage.getItem("sakuraCurrentUser");
-if(savedUser) enterApp(savedUser);
-
-/* NAVIGATION */
-function showTab(id,button){
-  document.querySelectorAll(".tool").forEach(el=>el.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  document.querySelectorAll(".tab").forEach(el=>el.classList.remove("active"));
-  button.classList.add("active");
-  if(id==="molecules") drawMolecule();
-}
-
-/* CHEMICAL ELEMENTS */
-const masses={
-  H:1.008,He:4.003,Li:6.94,Be:9.012,B:10.81,
-  C:12.011,N:14.007,O:15.999,F:18.998,Ne:20.18,
-  Na:22.990,Mg:24.305,Al:26.982,Si:28.085,
-  P:30.974,S:32.06,Cl:35.45,Ar:39.948,
-  K:39.098,Ca:40.078,Fe:55.845,Cu:63.546,
-  Zn:65.38,Br:79.904,Ag:107.868,I:126.904,
-  Ba:137.327,Au:196.967,Pb:207.2
+const AVOGADRO=6.02214076e23;
+const elements={
+ H:[1.008,"#f4f4f4"],He:[4.0026,"#d9c8ff"],Li:[6.94,"#d99ac2"],
+ Be:[9.0122,"#b5d7a8"],B:[10.81,"#e5a46c"],C:[12.011,"#858995"],
+ N:[14.007,"#79a3e0"],O:[15.999,"#e87979"],F:[18.998,"#8bcf9a"],
+ Ne:[20.18,"#b8a4e8"],Na:[22.99,"#bd91d4"],Mg:[24.305,"#82bd9a"],
+ Al:[26.982,"#a9a9b8"],Si:[28.085,"#d0a36d"],P:[30.974,"#e9a34d"],
+ S:[32.06,"#e3cf64"],Cl:[35.45,"#78bd78"],Ar:[39.948,"#b3a2df"],
+ K:[39.098,"#a88bd2"],Ca:[40.078,"#8fbd91"],Fe:[55.845,"#bd8060"],
+ Cu:[63.546,"#c98762"],Zn:[65.38,"#a4b5c4"],Br:[79.904,"#a66a52"],
+ Ag:[107.868,"#c5cbd3"],I:[126.904,"#9a80bd"],Ba:[137.327,"#8dbb84"]
 };
 
-/* CHEMICAL FORMULA PARSER */
+const molecules=[
+["Eau","H2O","Inorganique",100],
+["Dioxyde de carbone","CO2","Oxyde",-78.5],
+["Monoxyde de carbone","CO","Oxyde",-191.5],
+["Méthane","CH4","Hydrocarbure",-161.5],
+["Éthane","C2H6","Hydrocarbure",-88.6],
+["Propane","C3H8","Hydrocarbure",-42.1],
+["Butane","C4H10","Hydrocarbure",-0.5],
+["Éthène","C2H4","Hydrocarbure",-103.7],
+["Éthyne","C2H2","Hydrocarbure",-84],
+["Benzène","C6H6","Aromatique",80.1],
+["Éthanol","C2H6O","Alcool",78.37],
+["Méthanol","CH4O","Alcool",64.7],
+["Acétone","C3H6O","Cétone",56.05],
+["Acide acétique","C2H4O2","Acide",118.1],
+["Ammoniac","NH3","Inorganique",-33.34],
+["Peroxyde d'hydrogène","H2O2","Inorganique",150.2],
+["Chlorure d'hydrogène","HCl","Inorganique",-85.1],
+["Chlorure de sodium","NaCl","Sel",1465],
+["Chlorure de calcium","CaCl2","Sel",1935],
+["Acide sulfurique","H2SO4","Acide",337],
+["Acide nitrique","HNO3","Acide",83],
+["Glucose","C6H12O6","Glucide",null],
+["Urée","CH4N2O","Composé azoté",null],
+["Sulfure d'hydrogène","H2S","Soufré",-60.3],
+["Dioxyde de soufre","SO2","Oxyde",-10],
+["Ozone","O3","Corps simple",-111.9],
+["Fluor","F2","Corps simple",-188.1],
+["Chlore","Cl2","Corps simple",-34],
+["Brome","Br2","Corps simple",58.8],
+["Iode","I2","Corps simple",184.3],
+["Azote","N2","Corps simple",-195.8],
+["Oxygène","O2","Corps simple",-183],
+["Hydrogène","H2","Corps simple",-252.9],
+["Argon","Ar","Gaz noble",-185.8],
+["Phosphine","PH3","Composé phosphoré",-87.7],
+["Silane","SiH4","Composé du silicium",-111.8],
+["Ammonium","NH4","Ion",null]
+].map(x=>({name:x[0],formula:x[1],group:x[2],bp:x[3]}));
+
+let selected=molecules[0],rotation=0;
+
 function parseFormula(formula){
-  const s=formula.replace(/\s/g,"");
-  if(!s) throw new Error("Entre une formule chimique.");
-
-  let index=0;
-
-  function number(){
-    const match=s.slice(index).match(/^\d+/);
-    if(!match)return 1;
-    index+=match[0].length;
-    return Number(match[0]);
+ let i=0;
+ function number(){let m=formula.slice(i).match(/^\d+/);if(m){i+=m[0].length;return Number(m[0])}return 1}
+ function group(){
+  let out={};
+  while(i<formula.length && formula[i]!==")"){
+   if(formula[i]==="("){
+    i++;let inner=group();i++;let n=number();
+    for(let e in inner)out[e]=(out[e]||0)+inner[e]*n;
+   }else{
+    let m=formula.slice(i).match(/^[A-Z][a-z]?/);
+    if(!m)throw Error("Formule incorrecte");
+    let e=m[0];i+=e.length;out[e]=(out[e]||0)+number();
+   }
   }
-
-  function group(){
-    const result={};
-
-    while(index<s.length){
-      if(s[index]==="("){
-        index++;
-        const inner=group();
-        const multiplier=number();
-
-        for(const el in inner){
-          result[el]=(result[el]||0)+inner[el]*multiplier;
-        }
-      }else if(s[index]===")"){
-        index++;
-        return result;
-      }else{
-        const match=s.slice(index).match(/^([A-Z][a-z]?)/);
-        if(!match)throw new Error("Formule chimique invalide.");
-
-        const el=match[1];
-        index+=el.length;
-
-        if(!(el in masses))throw new Error("Élément inconnu : "+el);
-
-        const n=number();
-        result[el]=(result[el]||0)+n;
-      }
-    }
-    return result;
-  }
-
-  const result=group();
-  if(index!==s.length)throw new Error("Vérifie les parenthèses de la formule.");
-  return result;
+  return out;
+ }
+ return group();
 }
-
-function molarMass(atoms){
-  return Object.entries(atoms).reduce((sum,[el,n])=>sum+masses[el]*n,0);
+function getData(){
+ const atoms=parseFormula(selected.formula);let M=0;
+ for(let e in atoms){if(!elements[e])throw Error("Élément inconnu : "+e);M+=elements[e][0]*atoms[e]}
+ return {atoms,M};
 }
-
-function calculateMolar(){
-  const output=document.getElementById("molarResult");
-  try{
-    const f=document.getElementById("formula1").value;
-    const atoms=parseFormula(f);
-    output.innerHTML="<b>Formule :</b> "+f+
-      "<br><b>Masse molaire :</b> "+molarMass(atoms).toFixed(3)+" g/mol";
-  }catch(e){output.textContent=e.message;}
+function fmt(x,d=3){return Number(x).toLocaleString("fr-FR",{maximumFractionDigits:d})}
+function scientific(x){
+ if(!x)return "0";
+ let e=Math.floor(Math.log10(Math.abs(x))),a=x/10**e;
+ return fmt(a,4)+" × 10^"+e;
 }
+function subscript(f){return f.replace(/\d/g,n=>"₀₁₂₃₄₅₆₇₈₉"[n])}
 
-function calculateAtoms(){
-  const output=document.getElementById("atomsResult");
-  try{
-    const f=document.getElementById("formula2").value;
-    const atoms=parseFormula(f);
-    const total=Object.values(atoms).reduce((a,b)=>a+b,0);
-    let html="<b>Formule :</b> "+f+"<br><b>Total :</b> "+total+" atomes<br><br>";
-    for(const el in atoms)html+=el+" : "+atoms[el]+" atome(s)<br>";
-    output.innerHTML=html;
-  }catch(e){output.textContent=e.message;}
+function renderList(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const box=document.getElementById("moleculeList");box.innerHTML="";
+ molecules.filter(m=>(m.name+" "+m.formula+" "+m.group).toLowerCase().includes(q)).forEach(m=>{
+  const b=document.createElement("button");
+  b.className="mol"+(m===selected?" active":"");
+  b.innerHTML="<span><b>"+m.name+"</b><br><small>"+m.group+"</small></span><b>"+subscript(m.formula)+"</b>";
+  b.onclick=()=>{selected=m;rotation=0;refresh();renderList()};
+  box.appendChild(b);
+ });
+ if(!box.children.length)box.innerHTML="<p>Aucune molécule trouvée.</p>";
 }
-
-function calculateComposition(){
-  const output=document.getElementById("compositionResult");
-  try{
-    const f=document.getElementById("formula3").value;
-    const atoms=parseFormula(f);
-    const total=molarMass(atoms);
-    let html="<b>Masse molaire totale :</b> "+total.toFixed(3)+" g/mol";
-    html+="<table><tr><th>Élément</th><th>Masse</th><th>Pourcentage</th></tr>";
-
-    for(const el in atoms){
-      const mass=atoms[el]*masses[el];
-      html+="<tr><td>"+el+"</td><td>"+mass.toFixed(3)+"</td><td>"+
-        (mass/total*100).toFixed(2)+" %</td></tr>";
-    }
-    output.innerHTML=html+"</table>";
-  }catch(e){output.textContent=e.message;}
+function refresh(){
+ const d=getData();
+ document.getElementById("selectedName").textContent=selected.name;
+ document.getElementById("selectedFormula").textContent=subscript(selected.formula);
+ document.getElementById("molarMass").textContent=fmt(d.M,4)+" g/mol";
+ updateMass();updateAtoms();updateComposition();updateBoiling();drawStructure();
 }
-
-/* BOILING POINTS */
-const boilingData={
-  water:["Water (H₂O)",100],
-  ethanol:["Ethanol (C₂H₅OH)",78.37],
-  acetone:["Acetone (C₃H₆O)",56.05],
-  benzene:["Benzene (C₆H₆)",80.1],
-  methanol:["Methanol (CH₃OH)",64.7],
-  ammonia:["Ammonia (NH₃)",-33.34],
-  oxygen:["Oxygen (O₂)",-183],
-  nitrogen:["Nitrogen (N₂)",-195.8]
-};
-
-function calculateBoiling(){
-  const data=boilingData[document.getElementById("substance").value];
-  document.getElementById("boilingResult").innerHTML=
-    "<b>Substance :</b> "+data[0]+
-    "<br><b>Température d'ébullition :</b> "+data[1]+" °C";
+function updateMass(){
+ const n=Math.max(0,Number(document.getElementById("massN").value)||0);
+ document.getElementById("sampleMass").textContent=fmt(n*getData().M,5)+" g";
 }
-
-/* INTERACTIVE 3D MOLECULE ENGINE */
-const svgNS="http://www.w3.org/2000/svg";
-const drawing=document.getElementById("moleculeDrawing");
-const viewer=document.getElementById("viewer");
-
-let angleX=-0.25;
-let angleY=0.45;
-let zoom=1;
-let dragging=false;
-let lastX=0;
-let lastY=0;
-
-const molecules={
-  H2O:{
-    name:"Water",
-    formula:"H₂O",
-    geometry:"Bent / coudée",
-    angle:"≈ 104.5°",
-    atoms:[
-      {p:[0,0,0],e:"O"},
-      {p:[-1.1,0.65,0],e:"H"},
-      {p:[1.1,0.65,0],e:"H"}
-    ],
-    bonds:[[0,1],[0,2]]
-  },
-  CO2:{
-    name:"Carbon dioxide",
-    formula:"CO₂",
-    geometry:"Linear",
-    angle:"180°",
-    atoms:[
-      {p:[-1.5,0,0],e:"O"},
-      {p:[0,0,0],e:"C"},
-      {p:[1.5,0,0],e:"O"}
-    ],
-    bonds:[[0,1],[1,2]]
-  },
-  CH4:{
-    name:"Methane",
-    formula:"CH₄",
-    geometry:"Tetrahedral",
-    angle:"≈ 109.5°",
-    atoms:[
-      {p:[0,0,0],e:"C"},
-      {p:[1,1,1],e:"H"},
-      {p:[-1,-1,1],e:"H"},
-      {p:[-1,1,-1],e:"H"},
-      {p:[1,-1,-1],e:"H"}
-    ],
-    bonds:[[0,1],[0,2],[0,3],[0,4]]
-  },
-  NH3:{
-    name:"Ammonia",
-    formula:"NH₃",
-    geometry:"Trigonal pyramidal",
-    angle:"≈ 107°",
-    atoms:[
-      {p:[0,0.65,0],e:"N"},
-      {p:[-1,-0.35,0.7],e:"H"},
-      {p:[1,-0.35,0.7],e:"H"},
-      {p:[0,-0.55,-1],e:"H"}
-    ],
-    bonds:[[0,1],[0,2],[0,3]]
-  }
-};
-
-function rotatePoint(p){
-  let [x,y,z]=p;
-
-  const cy=Math.cos(angleY),sy=Math.sin(angleY);
-  const cx=Math.cos(angleX),sx=Math.sin(angleX);
-
-  const x1=x*cy-z*sy;
-  const z1=x*sy+z*cy;
-  const y1=y*cx-z1*sx;
-  const z2=y*sx+z1*cx;
-
-  return [x1,y1,z2];
+function updateAtoms(){
+ const d=getData(),count=Object.values(d.atoms).reduce((a,b)=>a+b,0);
+ const n=Math.max(0,Number(document.getElementById("atomN").value)||0);
+ document.getElementById("atomsPer").textContent=count;
+ document.getElementById("totalAtoms").textContent=scientific(n*AVOGADRO*count);
+ document.getElementById("atomRows").innerHTML=Object.entries(d.atoms).map(([e,n])=>`<tr><td>${e}</td><td>${n}</td></tr>`).join("");
 }
-
-function project(p){
-  const [x,y,z]=rotatePoint(p);
-  const perspective=5/(5+z*.16);
-  return {
-    x:250+x*83*zoom*perspective,
-    y:175-y*83*zoom*perspective,
-    z:z
-  };
+function updateComposition(){
+ const d=getData();
+ document.getElementById("compositionMass").textContent=fmt(d.M,4)+" g/mol";
+ document.getElementById("compositionRows").innerHTML=Object.entries(d.atoms).map(([e,n])=>{
+  let mass=elements[e][0]*n;
+  return `<tr><td>${e}</td><td>${n}</td><td>${fmt(mass,4)}</td><td>${fmt(mass/d.M*100,2)} %</td></tr>`;
+ }).join("");
 }
-
-function svgElement(tag,attrs){
-  const el=document.createElementNS(svgNS,tag);
-  for(const key in attrs)el.setAttribute(key,attrs[key]);
-  return el;
+function updateBoiling(){
+ const v=selected.bp;
+ document.getElementById("boilingC").textContent=v===null?"Non défini":fmt(v,2)+" °C";
+ document.getElementById("boilingK").textContent=v===null?"—":fmt(v+273.15,2)+" K";
+ document.getElementById("boilingNote").textContent=
+ v===null?"Cette espèce se décompose ou n'a pas de température d'ébullition propre.":
+ "Valeur indicative à environ 1 atm. La pression peut modifier la température d'ébullition.";
 }
-
-function drawMolecule(){
-  const key=document.getElementById("moleculeSelect").value;
-  const mol=molecules[key];
-  drawing.innerHTML="";
-
-  const points=mol.atoms.map(a=>project(a.p));
-
-  // Bonds behind atoms
-  mol.bonds.forEach(([a,b])=>{
-    const p1=points[a],p2=points[b];
-
-    const line=svgElement("line",{
-      x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,
-      stroke:"#c58ba7",
-      "stroke-width":"13",
-      "stroke-linecap":"round",
-      opacity:".9"
-    });
-    drawing.appendChild(line);
-
-    const shine=svgElement("line",{
-      x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,
-      stroke:"#fff1f7",
-      "stroke-width":"4",
-      "stroke-linecap":"round"
-    });
-    drawing.appendChild(shine);
-  });
-
-  // Atoms sorted by depth
-  const sorted=mol.atoms.map((a,i)=>({...a,index:i,z:points[i].z}))
-    .sort((a,b)=>a.z-b.z);
-
-  sorted.forEach(atom=>{
-    const p=points[atom.index];
-    const radius=atom.e==="H"?19:atom.e==="C"?29:atom.e==="O"?29:28;
-    const gradient=atom.e==="H"?"url(#hydrogen)":
-      atom.e==="O"?"url(#oxygen)":
-      atom.e==="N"?"url(#nitrogen)":"url(#carbon)";
-
-    const circle=svgElement("circle",{
-      cx:p.x,cy:p.y,r:radius,
-      fill:gradient,
-      stroke:"#ffffff",
-      "stroke-width":"2",
-      "fill-opacity":".98"
-    });
-    drawing.appendChild(circle);
-
-    const label=svgElement("text",{
-      x:p.x,y:p.y+5,
-      "text-anchor":"middle",
-      "font-size":atom.e==="H"?"15":"19",
-      "font-family":"Quicksand",
-      "font-weight":"700",
-      fill:atom.e==="H"?"#a78b9a":"white"
-    });
-    label.textContent=atom.e;
-    drawing.appendChild(label);
-  });
-
-  document.getElementById("moleculeInfo").innerHTML=
-    "<b>"+mol.name+" ("+mol.formula+")</b><br>"+
-    "Molecular geometry : "+mol.geometry+"<br>"+
-    "Bond angle : "+mol.angle;
+function openTab(id,button){
+ document.querySelectorAll(".tool").forEach(x=>x.classList.remove("active"));
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");button.classList.add("active");
 }
-
-function zoomMolecule(factor){
-  zoom=Math.max(.55,Math.min(2.2,zoom*factor));
-  drawMolecule();
+function drawStructure(){
+ const svg=document.getElementById("moleculeSvg"),atoms=[];
+ for(let e in getData().atoms)for(let i=0;i<getData().atoms[e];i++)atoms.push(e);
+ if(atoms.length>16){svg.innerHTML='<text x="250" y="140" text-anchor="middle" fill="#b84f7e">Structure simplifiée non disponible</text>';return}
+ const cx=250,cy=140,r=Math.min(105,30+atoms.length*9);
+ const pts=atoms.map((e,i)=>({e,x:cx+(atoms.length===1?0:Math.cos(i*2*Math.PI/atoms.length+rotation)*r),y:cy+(atoms.length===1?0:Math.sin(i*2*Math.PI/atoms.length+rotation)*r)}));
+ let lines="";
+ for(let i=1;i<pts.length;i++)lines+=`<line x1="${pts[0].x}" y1="${pts[0].y}" x2="${pts[i].x}" y2="${pts[i].y}" stroke="#d9a8bd" stroke-width="5"/>`;
+ svg.innerHTML=lines+pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="24" fill="${elements[p.e][1]}" stroke="white" stroke-width="3"/><text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-weight="bold" fill="#684459">${p.e}</text>`).join("");
 }
+function rotate(v){rotation+=v;drawStructure()}
 
-function resetMolecule(){
-  angleX=-0.25;
-  angleY=0.45;
-  zoom=1;
-  drawMolecule();
+/* Demo authentication: local browser storage, not secure production authentication */
+function accounts(){return JSON.parse(localStorage.getItem("chemAccounts")||"{}")}
+function showRegister(){document.getElementById("loginForm").classList.add("hidden");document.getElementById("registerForm").classList.remove("hidden");document.getElementById("authMessage").textContent=""}
+function showLogin(){document.getElementById("registerForm").classList.add("hidden");document.getElementById("loginForm").classList.remove("hidden");document.getElementById("authMessage").textContent=""}
+function register(){
+ const u=document.getElementById("regUser").value.trim(),p=document.getElementById("regPass").value;
+ const a=accounts();
+ if(u.length<3||p.length<4){authMessage("Username: 3 caractères minimum, mot de passe: 4 minimum.");return}
+ if(a[u]){authMessage("Ce username existe déjà.");return}
+ a[u]=p;localStorage.setItem("chemAccounts",JSON.stringify(a));
+ authMessage("Compte créé ! Connecte-toi.");showLogin();
 }
-
-viewer.addEventListener("pointerdown",e=>{
-  dragging=true;
-  lastX=e.clientX;
-  lastY=e.clientY;
-  viewer.setPointerCapture(e.pointerId);
-});
-
-viewer.addEventListener("pointermove",e=>{
-  if(!dragging)return;
-  const dx=e.clientX-lastX;
-  const dy=e.clientY-lastY;
-  angleY+=dx*.01;
-  angleX+=dy*.01;
-  lastX=e.clientX;
-  lastY=e.clientY;
-  drawMolecule();
-});
-
-viewer.addEventListener("pointerup",()=>dragging=false);
-viewer.addEventListener("pointercancel",()=>dragging=false);
-
-viewer.addEventListener("wheel",e=>{
-  e.preventDefault();
-  zoomMolecule(e.deltaY<0?1.08:.92);
-},{passive:false});
-
-viewer.addEventListener("dblclick",resetMolecule);
-
-drawMolecule();
+function login(){
+ const u=document.getElementById("loginUser").value.trim(),p=document.getElementById("loginPass").value;
+ if(accounts()[u]!==p){authMessage("Username ou mot de passe incorrect.");return}
+ localStorage.setItem("chemUser",u);enterApp(u);
+}
+function authMessage(s){document.getElementById("authMessage").textContent=s}
+function enterApp(u){document.getElementById("auth").classList.add("hidden");document.getElementById("username").textContent=u}
+function logout(){localStorage.removeItem("chemUser");document.getElementById("auth").classList.remove("hidden")}
+function createPetals(){
+ const box=document.getElementById("petals");
+ for(let i=0;i<18;i++){
+  const p=document.createElement("div");p.className="petal";p.textContent="✿";
+  p.style.left=Math.random()*100+"vw";p.style.animationDuration=(8+Math.random()*12)+"s";
+  p.style.animationDelay=(-Math.random()*15)+"s";p.style.fontSize=(12+Math.random()*13)+"px";box.appendChild(p);
+ }
+}
+document.getElementById("massN").addEventListener("input",updateMass);
+document.getElementById("atomN").addEventListener("input",updateAtoms);
+createPetals();renderList();refresh();
+const savedUser=localStorage.getItem("chemUser");if(savedUser)enterApp(savedUser);
 </script>
-
 </body>
 </html>
