@@ -5,6 +5,137 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ChemLab - Calculateur Chimique</title>
+    
+/* ===== PINK CHEMLAB THEME ===== */
+
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #fff0f6, #fce4ec, #f8bbd0);
+  color: #783b58;
+}
+
+.container {
+  max-width: 1100px;
+}
+
+header h1 {
+  color: #d63384;
+  font-size: 43px;
+  font-weight: 800;
+}
+
+header p {
+  color: #a65b7d;
+}
+
+.card {
+  background: rgba(255,255,255,0.88);
+  border: 1px solid #f3bfd5;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(214,51,132,0.12);
+  color: #783b58;
+}
+
+label {
+  color: #b83272;
+}
+
+input {
+  background: #fff7fb;
+  color: #783b58;
+  border: 2px solid #f1b6d0;
+  border-radius: 14px;
+}
+
+input:focus {
+  border-color: #d63384;
+}
+
+button {
+  background: linear-gradient(135deg,#ec4899,#d63384);
+  color: white;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ad2365;
+  transform: translateY(-2px);
+}
+
+.examples {
+  color: #a65b7d;
+}
+
+.examples span,
+.result h2,
+.section-title,
+th {
+  color: #d63384;
+}
+
+.result-box {
+  background: #fff0f6;
+  border: 1px solid #f5c2d8;
+  border-radius: 18px;
+}
+
+.result-box p {
+  color: #a65b7d;
+}
+
+.result-box strong {
+  color: #c02672;
+}
+
+th, td {
+  border-bottom: 1px solid #f3c5d9;
+}
+
+.error {
+  color: #d00055;
+}
+
+.info, footer {
+  color: #a65b7d;
+}
+
+footer {
+  color: #a65b7d;
+}
+
+::selection {
+  background: #f9a8d4;
+  color: #783b58;
+}
+.molecule-card select {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid #f1b6d0;
+  border-radius: 12px;
+  background: #fff7fb;
+  color: #783b58;
+  font-size: 16px;
+  margin: 15px 0;
+}
+
+#molecule3D {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: radial-gradient(circle, #fffafd, #fce4ec);
+  border: 1px solid #f3bfd5;
+}
+
+#molecule3D canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+    
+
 
 <style>
 * {
@@ -12,8 +143,212 @@
     padding: 0;
     box-sizing: border-box;
 }
+    
+<script type="module">
+import * as THREE from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-body {
+import { OrbitControls } from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+const container = document.getElementById('molecule3D');
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  45,
+  container.clientWidth / container.clientHeight,
+  0.1,
+  100
+);
+
+camera.position.set(0, 0, 7);
+
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true
+});
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
+
+scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+
+const light = new THREE.DirectionalLight(0xffffff, 2);
+light.position.set(4, 5, 5);
+scene.add(light);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.minDistance = 3;
+controls.maxDistance = 12;
+
+const group = new THREE.Group();
+scene.add(group);
+
+const colors = {
+  H: 0xffffff,
+  O: 0xff3333,
+  C: 0x444444,
+  N: 0x3366ff
+};
+
+const molecules = {
+  H2O: [
+    {e:'O',p:[0,0,0]},
+    {e:'H',p:[-0.8,0.6,0]},
+    {e:'H',p:[0.8,0.6,0]}
+  ],
+  CO2: [
+    {e:'C',p:[0,0,0]},
+    {e:'O',p:[-1.2,0,0]},
+    {e:'O',p:[1.2,0,0]}
+  ],
+  CH4: [
+    {e:'C',p:[0,0,0]},
+    {e:'H',p:[1,1,1]},
+    {e:'H',p:[-1,-1,1]},
+    {e:'H',p:[-1,1,-1]},
+    {e:'H',p:[1,-1,-1]}
+  ],
+  NH3: [
+    {e:'N',p:[0,0,0]},
+    {e:'H',p:[1,0.5,0]},
+    {e:'H',p:[-0.5,0.5,0.87]},
+    {e:'H',p:[-0.5,0.5,-0.87]}
+  ]
+};
+
+function createMolecule(name) {
+  while (group.children.length) {
+    const obj = group.children[0];
+    group.remove(obj);
+    obj.geometry?.dispose();
+    obj.material?.dispose();
+  }
+
+  const atoms = molecules[name];
+
+  // Create atoms
+  atoms.forEach(atom => {
+    const radius = atom.e === 'H' ? 0.23 : 0.38;
+
+    const geometry = new THREE.SphereGeometry(radius, 32, 32);
+
+    const material = new THREE.MeshPhongMaterial({
+      color: colors[atom.e],
+      shininess: 100
+    });
+
+    const sphere = new THREE.Mesh(geometry, material);
+
+    sphere.position.set(...atom.p);
+    group.add(sphere);
+  });
+
+  // Create bonds
+  const bonds = [];
+
+  atoms.forEach((atom, i) => {
+    if (atom.e === 'H') return;
+
+    atoms.forEach((other, j) => {
+      if (j <= i || other.e !== 'H') return;
+
+      bonds.push([atom.p, other.p]);
+    });
+  });
+
+  // CO2 double bonds
+  if (name === 'CO2') {
+    bonds.length = 0;
+    bonds.push([atoms[0].p, atoms[1].p]);
+    bonds.push([atoms[0].p, atoms[2].p]);
+  }
+
+  bonds.forEach(([a,b]) => {
+    const start = new THREE.Vector3(...a);
+    const end = new THREE.Vector3(...b);
+
+    const direction = new THREE.Vector3().subVectors(end,start);
+    const length = direction.length();
+
+    const geometry = new THREE.CylinderGeometry(
+      0.055, 0.055, length, 16
+    );
+
+    const material = new THREE.MeshPhongMaterial({
+      color: 0xe58ab5
+    });
+
+    const cylinder = new THREE.Mesh(geometry, material);
+
+    cylinder.position.copy(start).add(end).multiplyScalar(0.5);
+    cylinder.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0,1,0),
+      direction.normalize()
+    );
+
+    group.add(cylinder);
+  });
+
+  group.rotation.set(0.2, 0.3, 0);
+}
+
+createMolecule('H2O');
+
+document.getElementById('moleculeSelect')
+.addEventListener('change', event => {
+  createMolecule(event.target.value);
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(width, height);
+});
+</script>
+</body>
+</html>
+
+
+body
+      
+<div id="authScreen">
+  <div class="auth-card">
+    <h1>🎀 ChemLab</h1>
+    <p>Welcome to your pink chemistry lab!</p>
+
+    <div id="signupFields">
+      <input id="username" placeholder="Username" />
+      <input id="email" type="email" placeholder="Email address" />
+      <input id="password" type="password" placeholder="Password" />
+    </div>
+
+    <button id="signupBtn">Create Account</button>
+
+    <p id="authMessage"></p>
+  </div>
+</div>
+
+<div id="appContent" style="display:none">
+  <button id="logoutBtn">Logout</button>
+</div>
+
+      {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #071526, #103b5c);
     color: white;
@@ -276,6 +611,22 @@ footer {
 
 </div>
 
+<div class="card molecule-card">
+  <h2 class="section-title">🧬 Laboratoire Moléculaire 3D</h2>
+  <p class="info">Explorez les molécules en trois dimensions.</p>
+
+  <select id="moleculeSelect">
+    <option value="H2O">H₂O - Eau</option>
+    <option value="CO2">CO₂ - Dioxyde de carbone</option>
+    <option value="CH4">CH₄ - Méthane</option>
+    <option value="NH3">NH₃ - Ammoniac</option>
+  </select>
+
+  <div id="molecule3D"></div>
+  <p class="info">🖱️ Faites glisser pour tourner et utilisez la molette pour zoomer.</p>
+</div>
+
+    
 <footer>
     <p>⚗️ ChemLab © 2026</p>
     <p>Application éducative de chimie</p>
